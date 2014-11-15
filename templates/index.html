@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+<div class="section">
+	<h1>Without Proper Instruction's Assistance</h1>
+</div>
+
+<div class="section">
+	<h2>Upcoming Assignments</h2>
+	<ul>
+		{% for assignment in g.user.get_upcoming_assignments() %}
+		<li><a href="{{ url_for('view_assignment', assignment_id=assignment.id) }}">{{ assignment.name }}</a> ({{ assignment.course.name }})</li>
+		{% endfor %}
+	</ul>
+</div>
+
+<div class="section">
+	{% include 'course/taught_courses.html' %}
+</div>
+
+<div class="section">
+	{% include 'course/my_courses.html' %}
+</div>
+
+<div class="section">
+	<a href="{{ url_for('list_courses') }}">All Courses</a>
+</div>
+
+
+{% endblock main %}

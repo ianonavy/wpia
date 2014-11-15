@@ -1,0 +1,10 @@
+<h2>My Courses</h2>
+<ul class="courses">
+{% for course in g.user.courses %}
+<li class="course">
+	<a href="{{ url_for('view_course', course_id=course.id) }}">{{ course.name }}</a>
+</li>
+{% else %}
+<li>None yet!</li>
+{% endfor %}
+</ul>

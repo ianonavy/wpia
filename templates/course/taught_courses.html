@@ -1,0 +1,10 @@
+{% if g.user.taught_courses %}
+<h2>Courses I Teach</h2>
+<ul class="courses">
+{% for course in g.user.taught_courses %}
+<li class="course">
+	<a href="{{ url_for('view_course', course_id=course.id) }}">{{ course.name }}</a>
+</li>
+{% endfor %}
+</ul>
+{% endif %}

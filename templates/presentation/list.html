@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+{% block title %}{{ course.name }}{% endblock title %}
+
+{% block main %}
+<div class="section">
+	<h1>Presentations for {{ course.name }}</h1>
+</div>
+{% if g.user.is_instructor_for(course) %}
+<div class="section">
+	<a href="{{ url_for('new_presentation', course_id=course.id) }}">New Presentation</a>
+</div>
+{% endif %}
+<div class="section">
+	<ul class="presentations">
+	{% if g.user.is_instructor_for(course) %}
+	{% for presentation in course.presentations %}
+	<li class="presentation">
+		<a href="{{ presentations.url(presentation.filename) }}">{{ presentation.name }}</a> (displays at {{ presentation.display_at }})
+		<a href="{{ url_for('edit_presentation', presentation_id=presentation.id) }}">Edit</a>
+		<a href="{{ url_for('delete_presentation', presentation_id=presentation.id) }}">Delete</a>
+	</li>
+	{% else %}
+	<li>None yet!</li>
+	{% endfor %}
+	</ul>
+	{% else %}
+	{% for presentation in course.get_visible_presentations() %}
+	<li class="presentation">
+		<a href="{{ presentations.url(presentation.filename) }}">{{ presentation.name }}</a> ({{ presentation.display_at }})
+	</li>
+	{% else %}
+	<li>None yet!</li>
+	{% endfor %}
+	</ul>
+	{% endif %}
+</div>
+{% endblock main %}

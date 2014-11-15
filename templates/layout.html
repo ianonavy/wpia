@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>WPIA | {% block title %}Home{% endblock title %}</title>
+	<style>
+	/* http://meyerweb.com/eric/tools/css/reset/
+	   v2.0 | 20110126
+	   License: none (public domain)
+	*/
+
+	html, body, div, span, applet, object, iframe,
+	h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+	a, abbr, acronym, address, big, cite, code,
+	del, dfn, em, img, ins, kbd, q, s, samp,
+	small, strike, strong, sub, sup, tt, var,
+	b, u, i, center,
+	dl, dt, dd, ol, ul, li,
+	fieldset, form, label, legend,
+	table, caption, tbody, tfoot, thead, tr, th, td,
+	article, aside, canvas, details, embed,
+	figure, figcaption, footer, header, hgroup,
+	menu, nav, output, ruby, section, summary,
+	time, mark, audio, video {
+		margin: 0;
+		padding: 0;
+		border: 0;
+		font-size: 100%;
+		font: inherit;
+		vertical-align: baseline;
+	}
+	/* HTML5 display-role reset for older browsers */
+	article, aside, details, figcaption, figure,
+	footer, header, hgroup, menu, nav, section {
+		display: block;
+	}
+	body {
+		line-height: 1;
+	}
+	ol, ul {
+		list-style: none;
+	}
+	blockquote, q {
+		quotes: none;
+	}
+	blockquote:before, blockquote:after,
+	q:before, q:after {
+		content: '';
+		content: none;
+	}
+	table {
+		border-collapse: collapse;
+		border-spacing: 0;
+	}
+
+	body {
+		font-family: "Droid Sans", "Ubuntu", "DeJaVu Sans", "Arial", sans-serif;
+		background-color: #efefef;
+	}
+	.container {
+		min-width: 480px;
+		max-width: 960px;
+		min-height: 100vh;
+		margin: 0 auto;
+		background: #f8f8f8 url({{ url_for('static', filename='img/white_wall_hash.png') }});
+	}
+
+	.header {
+		text-align: left;
+		padding: 24px;
+		background-color: #001199;
+		color: #f8f8f8;
+	}
+	a {
+		text-decoration: none;
+	}
+	a:hover {
+		text-decoration: underline;
+	}
+	.header a, .header a:visited {
+		font-weight: bold;
+		color: #f8f8f8;
+	}
+	.logo {
+		font-size: 2.5em;
+		font-family: "Franklin Gothic", "Helvetica", "Arial", sans-serif;
+		margin-bottom: 8px;
+		color: #ffffff;
+	}
+	.logout {
+		float: right;
+		font: 0.8em "Arial", sans-serif;
+	}
+
+	.main {
+		padding: 24px;
+		line-height: 1.25;
+		color: #222;
+	}
+	.main h1 {
+		font-size: 1.5em;
+		font-weight: bold;
+	}
+	.main h2 {
+		font-size: 1.25em;
+		/*font-weight: bold;*/
+	}
+	.main h3 {
+		font-weight: bold;
+		margin-top: 8px;
+	}
+	.main a, .main a:visited {
+		color: #0000ff;
+	}
+	.main ul {
+		list-style: square;
+	}
+	.main li {
+		margin-left: 24px;
+	}
+	.main th, .main td {
+		padding: 8px 16px;
+	}
+	.main th {
+		/*font-weight: bold;*/
+		font-family: "Georgia", serif;
+		text-align: left;
+	}
+	.main label, .main input {
+		display: block;
+		margin-top: 8px;
+	}
+	.main input[type=text], .main input[type=password] {
+		display: inline-block;
+	}
+	.main input[type=text], .main input[type=password], .main textarea {
+		background-color: #f8f8f8;
+	}
+
+	.due-at {
+		color: #444;
+		font-style: italic;
+		font-size: 0.85em;
+	}
+
+
+	.section:not(:first-child) {
+		margin-top: 16px;
+	}
+
+	.footer {
+		font-size: 0.65em;
+		text-align: center;
+	}
+
+
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="header">
+			<div class="logout">
+				{% if g.user.is_authenticated() %}Logged in as {{ g.user.username }}. <a href="{{ url_for('logout') }}">Logout</a>{% endif %}
+			</div>
+			<div class="logo">
+				Without Proper Instruction's Assistance
+			</div>
+			{% block links %}{% include 'course/links.html' %}{% endblock %}
+		</div>
+		<div class="main">
+			{% block main %}
+			{% endblock main %}
+		</div>
+		<div class="footer">
+			Copyright &copy; 2014 Ian Naval
+		</div>
+	</div>
+</body>
+</html>

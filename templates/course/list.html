@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+{% block title %}Courses{% endblock title %}
+
+{% block main %}
+
+<div class="section">
+	<h1>Courses</h1>
+</div>
+
+<div class="section">
+	{% include 'course/taught_courses.html' %}
+</div>
+
+<div class="section">
+	{% include 'course/my_courses.html' %}
+</div>
+
+<div class="section">
+	<h2>All Courses</h2>
+	<ul class="courses">
+	{% for course in courses %}
+	<li class="course">
+		<a href="{{ url_for('view_course', course_id=course.id) }}">{{ course.name }}</a>
+	</li>
+	{% else %}
+	<li>None yet!</li>
+	{% endfor %}
+	</ul>
+</div>
+
+<div class="section">
+	{% if g.user.is_admin() %}
+	<a href="{{ url_for('new_course') }}">New Course</a>
+	{% endif %}
+</div>
+
+
+{% endblock main %}

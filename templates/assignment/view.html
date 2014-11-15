@@ -1,0 +1,87 @@
+{% extends 'layout.html' %}
+{% block title %}{{ course.name }}{% endblock title %}
+
+{% block main %}
+
+<div class="section">
+	<h1>{{ assignment.name }}</h1>
+	<p class="due-at">Due at {{ assignment.due_at }}</p>
+
+	<p>{{ assignment.description }}</p>
+	{% if url %}<a href="{{ url }}">Download full description</a>{% endif %}
+</div>
+
+
+<div class="section">
+
+	<h2>Submissions</h2>
+
+	{% if g.user.is_instructor_for(assignment.course) %}
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>User</th>
+				<th>Filename</th>
+				<th>Submitted At</th>
+				<th>Late?</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for submission in assignment.submissions %}
+			{% if submission.is_official %}
+			<tr>
+				<td>{{ submission.id }}</td>
+				<td>{{ submission.user.username }}</td>
+				<td><a href="{{ submissions.url(submission.filename) }}">{{ submission.filename }}</a></td>
+				<td>{{ submission.submitted_at }}</td>
+				<td>{{ submission.is_late() }}</td>
+			</tr>
+			{% endif %}
+			{% else %}
+			<tr><td colspan="5">No submissions yet.</td></tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% else %}
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Filename</th>
+				<th>Submitted At</th>
+				<th>Late?</th>
+				<th>Official?</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for submission in assignment.my_submissions() %}
+			<tr>
+				<td>{{ submission.id }}</td>
+				<td><a href="{{ submissions.url(submission.filename) }}">{{ submission.filename }}</a></td>
+				<td>{{ submission.submitted_at }}</td>
+				<td>{{ submission.is_late() }}</td>
+				<td>{{ submission.is_official }}</td>
+				<td>{% if not submission.is_official %} <a href="{{ url_for('officialize_submission', submission_id=submission.id) }}">Make Official</a> {% endif %}</td>
+			</tr>
+			{% else %}
+			<tr><td colspan="5">No submissions yet.</td></tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+<div class="section">
+	<h2>New Submission</h2>
+	<p>Allowed filetypes: .gz, .bz2, .zip, .tar, .tgz, .txz, and .7z</p>
+	<form action="{{ url_for('new_submission', assignment_id=assignment.id) }}" method="POST" enctype="multipart/form-data">
+		<input type="file" name="file">
+		<input type="submit">
+	</form>
+	{% endif %}
+</div>
+
+
+
+
+{% endblock main %}

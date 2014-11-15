@@ -1,0 +1,15 @@
+SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/test.db'
+SECRET_KEY = 'createasecretheredonttellanyone'
+
+UPLOADS_DEFAULT_DEST = '/tmp/uploads/'
+UPLOADS_DEFAULT_URL = '/uploads/'
+
+LDAP_SERVER = ''
+LDAP_PORT = 636
+LDAP_CONNECTION_UUID = ''
+LDAP_PASSWORD = ''
+BIND_DN_FORMAT = ''
+BIND_DN = ''
+BASE_DN = ''
+
+ADMIN_USERNAMES = []
